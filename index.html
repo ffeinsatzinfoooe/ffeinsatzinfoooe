@@ -1,0 +1,79 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The jQuery Example</title>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        function refresh(){
+            $(".markup").empty();
+            test();
+        }
+
+        function expand(number){
+            $("#infos" + number).slideToggle(500);
+           // $("#close" + number).html("Schließen")
+            $("#close" + number).text( $("#close" + number).text() == 'Info' ? "Schließen" : "Info");
+        };
+    
+
+        function test(){
+
+                $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('http://cf-intranet.ooelfv.at/webext2/rss/json_taeglich.txt') + '&callback=?', function(data){
+                    
+                    var json = JSON.parse(data.contents);
+                    //console.log(data);
+                    //get length of JSON.einsätze
+                    var count = Object.keys(json.einsaetze).length;
+                    console.log("JSON loaded")
+                    console.log("Einsatzzahl: " + count)
+
+                
+                
+                    
+                   for (var i = 0; i < Object.keys(json.einsaetze).length; i++){
+
+                        //Variables
+                        var ortlong = JSON.stringify(json.einsaetze[i].einsatz.einsatzort)
+                        var ort = ortlong.slice(5,ortlong.length - 1)
+                        var datelong = JSON.stringify(json.einsaetze[i].einsatz.startzeit)
+                        var date = datelong.slice(6,17)
+                        var time = datelong.slice(18,23)
+                        var enddatelong = JSON.stringify(json.einsaetze[i].einsatz.inzeit)
+                        var enddate = enddatelong.slice(6,17)
+                        var endtime = enddatelong.slice(18,23)
+                        var status = json.einsaetze[i].einsatz.status
+                        //position
+                        var lon = json.einsaetze[i].einsatz.wgs84.lng
+                        var lat = json.einsaetze[i].einsatz.wgs84.lat
+                        //Info Variables
+                        var defaulttext = json.einsaetze[i].einsatz.adresse.default
+                        var earea = json.einsaetze[i].einsatz.adresse.earea
+                        var emun = json.einsaetze[i].einsatz.adresse.emun
+                        var efeanme = json.einsaetze[i].einsatz.adresse.efeanme
+                        var estnum = json.einsaetze[i].einsatz.adresse.estnum
+                        var ecompl = json.einsaetze[i].einsatz.adresse.ecompl
+
+                        //append general info
+                        $( ".markup" ).append( 
+                                "<div class='entry' id = 'entry"+i+"'><h3 class='h3title'>" + json.einsaetze[i].einsatz.einsatzort + 
+                                "</h3>" + json.einsaetze[i].einsatz.einsatzsubtyp.text + "</br>" + "Beginn: " + date + " - " + time + "</br>" + "Ende: " + enddate + " - " + endtime + "<div class=infowrap><div class='close' id='close"+i+
+                                "'  onclick=expand("+i+")>Info</div><div id='infos"+ i + 
+                                "' class='infos'><div class='unnecessary'>" + defaulttext + "</br>" + earea + "</br>" + emun + "</br>" + efeanme + "</br>" + estnum + "</br>" +  ecompl + "</div><div class='map' id='map'><a href='https://maps.google.com/?q=" + lat + "," + lon + "' target='_blank'" + " >Einsatzort</a></div></div></div></div>"
+                        );
+
+                                        //onclick=document.getElementById('infos"+i+"').style.height='auto'
+                        
+                    }
+                });
+               
+            };
+    </script>
+ </head>
+ 
+ <body onload="test()">
+    <h1>Feuerwehreinsätze</h1>
+    <div id="markup" class="markup" style="min-width: 90%; height: auto;"></div>
+    <div id="refresh" onclick="refresh()"><span>Aktualisieren</span></div>
+ </body>
