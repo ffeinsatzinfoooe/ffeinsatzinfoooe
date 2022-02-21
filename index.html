@@ -20,7 +20,7 @@
 
         function test(){
 
-                $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('http://cf-intranet.ooelfv.at/webext2/rss/json_taeglich.txt') + '&callback=?', function(data){
+                $.getJSON('http://cf-intranet.ooelfv.at/webext2/rss/json_taeglich.txt') + '&callback=?', function(data){
                     
                     var json = JSON.parse(data.contents);
                     //console.log(data);
