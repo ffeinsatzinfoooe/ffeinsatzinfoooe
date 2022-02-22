@@ -1,17 +1,81 @@
 //URL
-var url = 'http://cf-intranet.ooelfv.at/webext2/rss/json_taeglich.txt'
+var url = 'http://cf-intranet.ooelfv.at/webext2/rss/json_laufend.txt'
 
 function loadPage(){
     $("#alarms").show();
     $("#settings").hide();
     $("#charts").hide();
     $("#map").hide();
+    $("#heading").hide();
+    $('#alarmsfooter').css( "filter", "invert(60%) sepia(32%) saturate(2934%) hue-rotate(186deg) brightness(97%) contrast(95%)")
 
     loadJSON( function() {
         buildList();
       });
 }
 
+
+
+function SectionSwitch(selectObject) {
+    if(selectObject == "alarmsfooter"){
+        $("#alarms").show();
+        $("#settings").hide();
+        $("#charts").hide();
+        $("#map").hide();
+        $('#alarmsfooter').css( "filter", "invert(60%) sepia(32%) saturate(2934%) hue-rotate(186deg) brightness(97%) contrast(95%)")
+        $('#chartsfooter').css( "filter", "none")
+        $('#mapfooter').css( "filter", "none")
+        $('#settingsfooter').css( "filter", "none")
+        $("#bezirksselector").show();
+        $("#timedropdown").show();
+        $("#heading").hide();
+    } 
+
+    if(selectObject == "chartsfooter"){
+        $("#alarms").hide();
+        $("#settings").hide();
+        $("#charts").show();
+        $("#map").hide();
+        $('#alarmsfooter').css( "filter", "none")
+        $('#chartsfooter').css( "filter", "invert(60%) sepia(32%) saturate(2934%) hue-rotate(186deg) brightness(97%) contrast(95%)")
+        $('#mapfooter').css( "filter", "none")
+        $('#settingsfooter').css( "filter", "none")
+        $("#bezirksselector").hide();
+        $("#timedropdown").hide();
+        $("#heading").html("Statistik");
+        $("#heading").show();
+    }  
+
+    if(selectObject == "mapfooter"){
+        $("#alarms").hide();
+        $("#settings").hide();
+        $("#charts").hide();
+        $("#map").show();
+        $('#alarmsfooter').css( "filter", "none")
+        $('#chartsfooter').css( "filter", "none")
+        $('#mapfooter').css( "filter", "invert(60%) sepia(32%) saturate(2934%) hue-rotate(186deg) brightness(97%) contrast(95%)")
+        $('#settingsfooter').css( "filter", "none")
+        $("#bezirksselector").hide();
+        $("#timedropdown").hide();
+        $("#heading").html("Karte");
+        $("#heading").show();
+    } 
+
+    if(selectObject == "settingsfooter"){
+        $("#alarms").hide();
+        $("#settings").show();
+        $("#charts").hide();
+        $("#map").hide();
+        $('#alarmsfooter').css( "filter", "none")
+        $('#chartsfooter').css( "filter", "none")
+        $('#mapfooter').css( "filter", "none")
+        $('#settingsfooter').css( "filter", "invert(60%) sepia(32%) saturate(2934%) hue-rotate(186deg) brightness(97%) contrast(95%)")
+        $("#bezirksselector").hide();
+        $("#timedropdown").hide();
+        $("#heading").html("Einstellungen");
+        $("#heading").show();
+    }  
+}
 
 function refresh(){
     $(".markup").empty();
@@ -100,7 +164,7 @@ function buildList(){
                     "' class='infos'><div class='unnecessaryinfowrap'><div class='unnecessary'>" + defaulttext + "</br>" + earea + "</br>" + emun + "</br>" + efeanme + "</br>" + estnum + "</br>" +  ecompl + "</div></div></br>" +
                     "Feuerwehren: " + json.einsaetze[i].einsatz.cntfeuerwehren + "</br><div class='feuerwehren"+i+"'></div></br>" +
                     "</div><div class='buttons'><div class='close' id='close"+i+
-                    "'  onclick=expand("+i+")>Info</div><div class='map' id='map'><a href='https://maps.google.com/?q=" + lat + "," + lon + "' target='_blank'" + " >Einsatzort</a></div></div></div></div></div>"
+                    "'  onclick=expand("+i+")>Info</div><div class='mapbutton' id='mapbutton'><a href='https://maps.google.com/?q=" + lat + "," + lon + "' target='_blank'" + " >Einsatzort</a></div></div></div></div></div>"
             );
             
 
@@ -144,7 +208,7 @@ function buildList(){
                 "' class='infos'><div class='unnecessaryinfowrap'><div class='unnecessary'>" + defaulttext + "</br>" + earea + "</br>" + emun + "</br>" + efeanme + "</br>" + estnum + "</br>" +  ecompl + "</div></div></br>" +
                 "Feuerwehren: " + json.einsaetze[i].einsatz.cntfeuerwehren + "</br><div class='feuerwehren"+i+"'></div></br>" +
                 "</div><div class='buttons'><div class='close' id='close"+i+
-                "'  onclick=expand("+i+")>Info</div><div class='map' id='map'><a href='https://maps.google.com/?q=" + lat + "," + lon + "' target='_blank'" + " >Einsatzort</a></div></div></div></div></div>"
+                "'  onclick=expand("+i+")>Info</div><div class='mapbutton' id='mapbutton'><a href='https://maps.google.com/?q=" + lat + "," + lon + "' target='_blank'" + " >Einsatzort</a></div></div></div></div></div>"
                 );
         
 
@@ -163,7 +227,7 @@ function buildList(){
                     "' class='infos'><div class='unnecessaryinfowrap'><div class='unnecessary'>" + defaulttext + "</br>" + earea + "</br>" + emun + "</br>" + efeanme + "</br>" + estnum + "</br>" +  ecompl + "</div></div></br>" +
                     "Feuerwehren: " + json.einsaetze[i].einsatz.cntfeuerwehren + "</br><div class='feuerwehren"+i+"'></div></br>" +
                     "</div><div class='buttons'><div class='close' id='close"+i+
-                    "'  onclick=expand("+i+")>Info</div><div class='map' id='map'><a href='https://maps.google.com/?q=" + lat + "," + lon + "' target='_blank'" + " >Einsatzort</a></div></div></div></div></div>"
+                    "'  onclick=expand("+i+")>Info</div><div class='mapbutton' id='mapbutton'><a href='https://maps.google.com/?q=" + lat + "," + lon + "' target='_blank'" + " >Einsatzort</a></div></div></div></div></div>"
                 );
             
     
