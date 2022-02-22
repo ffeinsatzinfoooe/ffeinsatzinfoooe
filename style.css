@@ -1,32 +1,146 @@
+:root {
+    --main-bg-color: #182431;
+    --secondary-element-color: #50A0F2; 
+  }
+
 body{
-    font-family: sans-serif;
-    background-color: #282A3C;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--main-bg-color);
+}
+    .spacer_top{
+        height: 72px;
+        width: 100%;
+        display: block;
+        background-color: var(--main-bg-color);
+    }
+
+    .spacer_bottom{
+        height: 80px;
+        width: 100%;
+        display: block;
+        background-color: var(--main-bg-color);
+    }
+
+section{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background-color: var(--main-bg-color);
 }
 
-#refresh{
+#header{
     position: fixed;
-    background-color: white;
+    height: 72;
+    width: 100%;
+    z-index: 5100000;
+    top: 0;
+    left: 0;
+    background-color: var(--main-bg-color);
+}
+    select {
+        outline: none;
+        background-color: var(--main-bg-color);
+        color: white;
+        border: none;
+        height: 100%;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        margin-left: 16px;
+    }
+        option{
+            width: 100vw;
+        }
+
+    select::-ms-expand {
+        display: none;
+    }
+
+    select:required:invalid {
+    color: #666;
+    }
+    option[value=""][disabled] {
+    display: none;
+    }
+
+    select:nth-child(2){
+        float: right;
+        margin-right: 16px;
+        text-align: right;
+    }
+
+#footer{
+    position: fixed;
+    height: 80px;
+    width: 100%;
+    z-index: 1000;
     bottom: 0;
     left: 0;
-    width: 100%;
-    height: 80px;
+    background-color: var(--main-bg-color);
+}
+
+.flexwrap{
     display: flex;
-    justify-content: center;
-    z-index: 100;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
 }
+    .flex1{
+        width: Calc(100% - 48px);
+        display: block;
+        height: auto;
+    }
+        .overview{
+            width: 100%;
+            display: block;
+            height: auto;
+            line-height: 18px;
+        }
 
-#refresh span{
-    font-size: 16px;
-    margin-top: 10px;
-}
+    .flexwrapside{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 48px;
+        height: auto;
+    }
 
-h1{
-    color: white;
-    margin-top: 10px;
-}
+
+        .flex2{
+            min-height: 33%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items:flex-start;
+        }
+        .flex3{
+            min-height: 33%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+            .strich{
+                background-color: black;
+                width: 1px;
+                height: 90%;
+            }
+        .flex4{
+            min-height: 33%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-items:flex-end;
+        }
+
 .entry{
     height: auto;
-    width: 95%;
+    width: 93%;
     max-width: 600px;
     margin: 0 auto;
     display: block;
@@ -37,12 +151,19 @@ h1{
     font-size: 14px;
     padding-bottom: 10px;
 }
+    .entrywrap{
+        width: 93%;
+        margin: 0 auto;
+        height: auto;
+        display: block;
+    }
    .h3title{
        padding: 0;
        margin: 0;
        font-size: 16px;
-       padding-top: 10px;
-       line-height: 16px;
+       line-height: 18px;
+       width: 100%;
+       display: block;
    }
 
 .infos{
@@ -56,18 +177,26 @@ h1{
     display:none;
     font-size: 14px;
 }
-
+    .unnecessaryinfowrap{
+        width: 100%;
+        background-color: var(--main-bg-color);
+        border-radius: 10px;
+    }
     .unnecessary{
-        background-color: #ececec;
-        margin-top: 10px;
+        background-color: var(--main-bg-color);
+        padding: 10px;
+        margin: 0 auto;
+        color: white;
+        border-radius: 10px;
     }
 
 .infowrap{
-   width: 92%;
+   width: 100%;
    margin: 0 auto;
    height: auto;
    flex-wrap: wrap;
    flex-direction: row;
+   line-height: 16px;
 }
 
 .buttons{
@@ -77,38 +206,40 @@ h1{
     height: auto;
 }
 
-.close{
-    width: 100px;
-    background-color: rgb(233, 105, 105);      
-    height: 40px; 
-    overflow: hidden;
-    color: white;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-}
+    .close{
+        width: 118px;
+        background-color: var(--secondary-element-color);      
+        height: 42px; 
+        border-radius: 6px;
+        overflow: hidden;
+        color: white;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-.map{
-    width: 100px;
-    background-color: rgb(233, 105, 105);      
-    height: 40px; 
-    overflow: hidden;
-    color: white;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-}
+    .map{
+        width: 118px;
+        background-color: var(--secondary-element-color);      
+        height: 42px; 
+        border-radius: 6px;
+        overflow: hidden;
+        color: white;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 20px;
+    }
 
-.map a{
-    text-decoration: none;
-    color: white;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .map a{
+        text-decoration: none;
+        color: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
