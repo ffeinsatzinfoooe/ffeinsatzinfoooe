@@ -35,11 +35,29 @@ section{
     position: fixed;
     height: 72;
     width: 100%;
-    z-index: 5100000;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    z-index: 510;
     top: 0;
     left: 0;
     background-color: var(--main-bg-color);
 }
+    #selectleft{
+        width: 50%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    #selectright{
+        width: 50%;
+        display: flex;
+        justify-content: flex-end;
+    }
+        #timedropdown{
+            margin-right: 16px;
+        }
+
     #heading{
         color: white;
         margin-left: 16px;
@@ -54,6 +72,7 @@ section{
         -webkit-appearance: none;
         -moz-appearance: none;
         margin-left: 16px;
+        font-size: 16px;
     }
         option{
             width: 100vw;
@@ -70,9 +89,7 @@ section{
     display: none;
     }
 
-    select:nth-child(2){
-        float: right;
-        margin-right: 16px;
+    #selectright select{
         text-align: right;
     }
 
@@ -207,6 +224,13 @@ section{
        display: block;
    }
 
+   .markup{
+    display: block;
+    height: Calc(100vh - 152px);
+    width: 100%;
+    overflow: auto;
+   }
+
 .infos{
     width:100%;
     margin: 0 auto;
@@ -283,4 +307,55 @@ section{
         justify-content: center;
         align-items: center;
     }
+#charts{
+    text-align: center;
+}
+    #charts img{
+        width: 85%;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
 
+#settings{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#mapheading{
+    height: 72px;
+    width: 100vw;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0; 
+    z-index: 510;
+    color: white;
+}
+
+    #mapheading h2{
+        margin-left: 16px;
+        width: 70%;
+    }
+
+    #selectrightmap{
+        width: 30%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    #selectrightmap select{
+        text-align: right;
+    }
+
+    .markerred{
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background-color: red;
+        display: block;
+        z-index: 600;
+      }
+    

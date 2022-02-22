@@ -7,14 +7,13 @@ function loadPage(){
     $("#charts").hide();
     $("#map").hide();
     $("#heading").hide();
+    $("#mapheading").hide();
     $('#alarmsfooter').css( "filter", "invert(60%) sepia(32%) saturate(2934%) hue-rotate(186deg) brightness(97%) contrast(95%)")
 
     loadJSON( function() {
         buildList();
       });
 }
-
-
 
 function SectionSwitch(selectObject) {
     if(selectObject == "alarmsfooter"){
@@ -29,6 +28,7 @@ function SectionSwitch(selectObject) {
         $("#bezirksselector").show();
         $("#timedropdown").show();
         $("#heading").hide();
+        $("#mapheading").hide();
     } 
 
     if(selectObject == "chartsfooter"){
@@ -44,6 +44,7 @@ function SectionSwitch(selectObject) {
         $("#timedropdown").hide();
         $("#heading").html("Statistik");
         $("#heading").show();
+        $("#mapheading").hide();
     }  
 
     if(selectObject == "mapfooter"){
@@ -57,8 +58,9 @@ function SectionSwitch(selectObject) {
         $('#settingsfooter').css( "filter", "none")
         $("#bezirksselector").hide();
         $("#timedropdown").hide();
-        $("#heading").html("Karte");
-        $("#heading").show();
+        $("#mapheading").show();
+        $("#heading").hide();
+        loadMap();
     } 
 
     if(selectObject == "settingsfooter"){
@@ -74,6 +76,7 @@ function SectionSwitch(selectObject) {
         $("#timedropdown").hide();
         $("#heading").html("Einstellungen");
         $("#heading").show();
+        $("#mapheading").hide();
     }  
 }
 
@@ -81,6 +84,7 @@ function refresh(){
     $(".markup").empty();
     loadJSON( function() {
         buildList();
+        populate();
       });
 }
 
@@ -243,3 +247,36 @@ function buildList(){
         }
         console.log("List filtered")
     };
+
+var map;
+function loadMap(){
+    map = L.map('mapid',{
+        center: [48.2, 14.2],
+        zoom: 9,
+        zoomControl: false,
+        tap: false,
+        });
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attributions: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+        }).addTo(map);
+}
+
+function populate(){
+    $(".leaflet-marker-icon").remove();
+    $(".leaflet-marker-shadow").remove();
+    $(".leaflet-popup").remove();
+    var markerred = L.divIcon({className: 'markerred'});
+    for (var i = 0; i < Object.keys(json.einsaetze).length; i++){
+        //Variables
+        var lonmap = json.einsaetze[i].einsatz.wgs84.lng
+        var latmap = json.einsaetze[i].einsatz.wgs84.lat
+        L.marker([latmap, lonmap], {icon: markerred}).addTo(map);
+    }
+    /*
+    if (json.einsaetze.length == undefined){
+        $(".leaflet-marker-icon").remove();
+        $(".leaflet-marker-shadow").remove();
+        $(".leaflet-popup").remove();
+    }*/
+}
