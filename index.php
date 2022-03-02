@@ -7,7 +7,7 @@
     <title>FF Info</title>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <!--<link rel="manifest" href="resources/manifest.webmanifest">-->
+    <link rel="manifest" href="resources/manifest.webmanifest">
     <script src="script.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -105,16 +105,4 @@
                 <div class="icontext">Einstellungen</div>
             </div>
     </div>
-    <script>
-        function test123(){
-            $.ajax({
-            url: 'test.php',
-            success: function(data) {
-                console.log(data)
-            }
-            });
-        }
-
-
-    </script>
  </body>
