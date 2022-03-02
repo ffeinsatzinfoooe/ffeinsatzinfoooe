@@ -4,10 +4,17 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-status-bar-style"content="black-translucent">
+    <link rel="icon" href="resources/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon-precomposed" href="resources/icon.png"/>
+    <link rel="apple-touch-icon" href="resources/icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="resources/72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="resources/114.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="resources/144.png" />
+    <link rel="manifest" href="resources/manifest.webmanifest">
     <title>FF Info</title>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="resources/manifest.webmanifest">
     <script src="script.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -84,7 +91,12 @@
     </section>
     <section id="settings">
         <div class="spacer_top"></div>
-        <span style="color: white; width: 100%;">coming soon</span>
+        <div class="chapter">
+            <div class="chapterentry"><p>Michael Schauer</p></div>
+            <div class="chapterentry"><p>Version 1.2.1</p></div>
+            <div class="chapterentry"><p>2022</p></div>
+            <div class="chapterentry"><button onclick="window.location.href='https://michaelschauer.github.io/contactopen.html'">Kontakt</button></div>
+        </div>
         <div class="spacer_bottom"></div>
     </section>
     <div id="footer">

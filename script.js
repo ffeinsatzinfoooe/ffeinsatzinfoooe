@@ -10,6 +10,8 @@ function loadPage(){
     loadJSON("now");
 }
 
+//Set VAR to initialize map only once
+var maploaded = false;
 function SectionSwitch(selectObject) {
     if(selectObject == "alarmsfooter"){
         $("#alarms").show();
@@ -55,7 +57,11 @@ function SectionSwitch(selectObject) {
         $("#timedropdown").hide();
         $("#mapheading").show();
         $("#heading").hide();
-        loadMap();
+        if (maploaded == false){
+            loadMap();
+            maploaded = true;
+        }
+        populate();
     } 
 
     if(selectObject == "settingsfooter"){
@@ -75,14 +81,6 @@ function SectionSwitch(selectObject) {
     }  
 }
 
-function refresh(){
-    $(".markup").empty();
-    loadJSON( function() {
-        buildList();
-        populate();
-      });
-}
-
 function filter(selectObject) {
     $(".markup").empty();
     var value = selectObject.value;  
@@ -91,24 +89,42 @@ function filter(selectObject) {
 }
 
 function timerange(selectObject) {
-    //$(".markup").empty();
-    var value = selectObject.value
+    $(".markup").empty();
+    var value = selectObject.value;
     if(value == "Laufend"){
-        loadJSON("now");
+        $.ajax({
+            url:loadJSON("now"),
+            success:function(){
+                //populate();
+            }
+         })
     }  
     if(value == "6Stunden"){
-        loadJSON("hour");
+        $.ajax({
+            url:loadJSON("hour"),
+            success:function(){
+                //populate();
+            }
+         })
     }
     if(value == "Tag"){
-        loadJSON("day");
+        $.ajax({
+            url:loadJSON("day"),
+            success:function(){
+                //populate();
+            }
+         })
     }
     if(value == "2Tage"){
-        loadJSON("twodays");
+        $.ajax({
+            url:loadJSON("twodays"),
+            success:function(){
+                //populate();
+            }
+         })
     }
-
-    refresh();
     $('#bezirksselector').prop('value', "");
-    console.log("Time filter applied");
+    console.log("##         Time filter applied");
 }
 
 function expand(number){
@@ -117,9 +133,8 @@ function expand(number){
     $("#close" + number).text( $("#close" + number).text() == 'Info' ? "Schließen" : "Info");
 };
 
-
+//Decline global JSON variable
 var json = "";
-var jsonvar = "";
 
 function loadJSON(range){
     var url1 = "";
@@ -132,9 +147,8 @@ function loadJSON(range){
             success: function(data) {
                 //console.log(data);
                 json = JSON.parse(data);
-                console.log(json);
+                //console.log(json);
                 console.log("JSON loaded")
-                jsonvar = json;
                 buildList();
             }
         });
@@ -148,7 +162,7 @@ function loadJSON(range){
             success: function(data) {
                 //console.log(data);
                 json = JSON.parse(data);
-                console.log(json);
+                //console.log(json);
                 console.log("JSON loaded")
                 buildList();
             }
@@ -163,7 +177,7 @@ function loadJSON(range){
             success: function(data) {
                 //console.log(data);
                 json = JSON.parse(data);
-                console.log(json);
+                //console.log(json);
                 console.log("JSON loaded")
                 buildList();
             }
@@ -178,7 +192,7 @@ function loadJSON(range){
             success: function(data) {
                 //console.log(data);
                 json = JSON.parse(data);
-                console.log(json);
+                //console.log(json);
                 console.log("JSON loaded")
                 buildList();
             }
@@ -188,6 +202,8 @@ function loadJSON(range){
 
 
 function buildList(){
+    try{
+        $(".markup").empty();
         var length = Object.keys(json.einsaetze).length;
         for (var i = 0; i < length; i++){
             //Variables
@@ -228,10 +244,19 @@ function buildList(){
                 );
             }
             
+            
+        }
+        populate()
+        }
+        catch(err){
+            $(".markup").append("<p style='line-height:30px;color:white; width:100%; text-align:center; margin-top: 300px;'>Aktuell wird die Feuerwehr nicht gebraucht</p><div class='head'><div class='face face__happy'><div class='eye-left'></div><div class='eye-right'></div><div class='mouth'></div></div></div>")
+        }
+        finally{
+            console.log("###    List Built")
         }
     };
 
-    function filterList(filter){
+function filterList(filter){
         for (var i = 0; i < Object.keys(json.einsaetze).length; i++){
             //Variables
             var ortlong = JSON.stringify(json.einsaetze[i].einsatz.einsatzort)
@@ -310,26 +335,28 @@ function loadMap(){
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attributions: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
         }).addTo(map);
-        $("#mapid").empty();
-        $("#map").html("<p style='width:100%; text-align:center;margin-top:300px; color:white;' >Bald verfügbar</p>");
-
 }
 
 function populate(){
-    $(".leaflet-marker-icon").remove();
-    $(".leaflet-marker-shadow").remove();
-    $(".leaflet-popup").remove();
-    var markerred = L.divIcon({className: 'markerred'});
-    for (var i = 0; i < Object.keys(json.einsaetze).length; i++){
-        //Variables
-        var lonmap = json.einsaetze[i].einsatz.wgs84.lng
-        var latmap = json.einsaetze[i].einsatz.wgs84.lat
-        L.marker([latmap, lonmap], {icon: markerred}).addTo(map);
-    }
-    /*
-    if (json.einsaetze.length == undefined){
+   
         $(".leaflet-marker-icon").remove();
         $(".leaflet-marker-shadow").remove();
         $(".leaflet-popup").remove();
-    }*/
+        console.log("###     Punkte entfernt");
+        var markerred = L.divIcon({className: 'markerred'}); 
+        try{
+            for (var i = 0; i < Object.keys(json.einsaetze).length; i++){
+                //Variables
+                var lonmap = json.einsaetze[i].einsatz.wgs84.lng
+                var latmap = json.einsaetze[i].einsatz.wgs84.lat
+                L.marker([latmap, lonmap], {icon: markerred}).addTo(map);
+                console.log("Punkt" + i)
+            }
+        }
+        catch(err){
+            console.log("Keine Punkte verfügbar");
+        }
+        finally{
+            console.log("###    Punkte zur Karte hinzugefügt")
+        }
 }
