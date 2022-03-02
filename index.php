@@ -7,7 +7,7 @@
     <link rel="icon" href="resources/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon"/>
     <link rel="apple-touch-icon-precomposed" href="resources/icon.png"/>
-    <link rel="apple-touch-icon" href="resources/icon.png" />
+    <link rel="apple-touch-icon" href="resources/512.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="resources/72.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="resources/114.png" />
     <link rel="apple-touch-icon" sizes="144x144" href="resources/144.png" />
