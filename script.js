@@ -1,6 +1,3 @@
-//URL
-var url = 'http://cf-intranet.ooelfv.at/webext2/rss/json_laufend.txt'
-
 function loadPage(){
     $("#alarms").show();
     $("#settings").hide();
@@ -10,9 +7,7 @@ function loadPage(){
     $("#mapheading").hide();
     $('#alarmsfooter').css( "filter", "invert(60%) sepia(32%) saturate(2934%) hue-rotate(186deg) brightness(97%) contrast(95%)")
 
-    loadJSON( function() {
-        buildList();
-      });
+    loadJSON("now");
 }
 
 function SectionSwitch(selectObject) {
@@ -99,16 +94,16 @@ function timerange(selectObject) {
     //$(".markup").empty();
     var value = selectObject.value
     if(value == "Laufend"){
-        url = 'http://cf-intranet.ooelfv.at/webext2/rss/json_laufend.txt'
+        loadJSON("now");
     }  
     if(value == "6Stunden"){
-        url = 'http://intranet.ooelfv.at/webext2/rss/json_6stunden.txt'
+        loadJSON("hour");
     }
     if(value == "Tag"){
-        url = 'http://intranet.ooelfv.at/webext2/rss/json_taeglich.txt'
+        loadJSON("day");
     }
     if(value == "2Tage"){
-        url = 'http://intranet.ooelfv.at/webext2/rss/json_2tage.txt'
+        loadJSON("twodays");
     }
 
     refresh();
@@ -123,23 +118,78 @@ function expand(number){
 };
 
 
-var json = '';
+var json = "";
+var jsonvar = "";
 
-function loadJSON(callback){
-    $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){   
-        json = JSON.parse(data.contents);
-        //console.log(data);
-        //get length of JSON.einsätze
-        var count = Object.keys(json.einsaetze).length;
-        console.log("JSON loaded")
-        console.log("Einsatzzahl: " + count)
-        callback();
-    });
+function loadJSON(range){
+    var url1 = "";
+    if (range == "now"){
+        var url1 = "laufend.php";
+        $.ajax({
+            type : "POST",
+            url: url1,
+            dataType: 'html',
+            success: function(data) {
+                //console.log(data);
+                json = JSON.parse(data);
+                console.log(json);
+                console.log("JSON loaded")
+                jsonvar = json;
+                buildList();
+            }
+        });
+    }
+    if (range == "day"){
+        var url1 = "taeglich.php";
+        $.ajax({
+            type : "POST",
+            url: url1,
+            dataType: 'html',
+            success: function(data) {
+                //console.log(data);
+                json = JSON.parse(data);
+                console.log(json);
+                console.log("JSON loaded")
+                buildList();
+            }
+        });
+    }
+    if (range == "hour"){
+        var url1 = "sechsstunden.php";
+        $.ajax({
+            type : "POST",
+            url: url1,
+            dataType: 'html',
+            success: function(data) {
+                //console.log(data);
+                json = JSON.parse(data);
+                console.log(json);
+                console.log("JSON loaded")
+                buildList();
+            }
+        });
+    }
+    if (range == "twodays"){
+        var url1 = "zweitage.php";
+        $.ajax({
+            type : "POST",
+            url: url1,
+            dataType: 'html',
+            success: function(data) {
+                //console.log(data);
+                json = JSON.parse(data);
+                console.log(json);
+                console.log("JSON loaded")
+                buildList();
+            }
+        });
+    }
 }
 
 
 function buildList(){
-        for (var i = 0; i < Object.keys(json.einsaetze).length; i++){
+        var length = Object.keys(json.einsaetze).length;
+        for (var i = 0; i < length; i++){
             //Variables
             var ortlong = JSON.stringify(json.einsaetze[i].einsatz.einsatzort)
             var ort = ortlong.slice(5,ortlong.length - 1)
@@ -260,6 +310,9 @@ function loadMap(){
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attributions: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
         }).addTo(map);
+        $("#mapid").empty();
+        $("#map").html("<p style='width:100%; text-align:center;margin-top:300px; color:white;' >Bald verfügbar</p>");
+
 }
 
 function populate(){
